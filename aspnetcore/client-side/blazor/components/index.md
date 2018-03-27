@@ -47,7 +47,7 @@ A Blazor *component* represents any programming feature or collection of feature
 
 
 
-##Routing
+## Routing
 
 
 ## JavaScript/TypeScript interop
