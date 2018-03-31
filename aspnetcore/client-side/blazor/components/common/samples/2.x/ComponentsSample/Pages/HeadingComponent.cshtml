@@ -1,0 +1,62 @@
+@using System.Net
+@*
+    The using directive makes System.Net available to the component.
+*@
+
+@*
+    Heading text is displayed and bound to the HeadingText property.
+    The font-style of the heading is bound to the HeadingFontStyle
+    property.
+*@
+<h1 style="font-style:@HeadingFontStyle">@HeadingText</h1>
+
+<form>
+    <div class="form-group">
+        <label for="headingText">New heading text</label>
+        @*
+            A field accepts new heading text from the user. 
+            The field is bound to the NewHeadingText property.
+        *@
+        <input type="text" class="form-control" id="headingText" 
+            placeholder="New heading text..." bind="@NewHeadingText" />
+    </div>
+    <div class="form-check">
+        @*
+            A checkbox toggles the font style and is bound to the 
+            ItalicsCheck property.
+        *@
+        <input type="checkbox" class="form-check-input" 
+            id="italicsCheck" bind="@ItalicsCheck" />
+        <label class="form-check-label" 
+            for="italicsCheck">Use italics</label>
+    </div>
+
+    @*
+        When the form is submitted, the onclick event executes 
+        the UpdateHeading method.
+    *@
+    <button class="btn btn-primary" @onclick(UpdateHeading)>
+        Update heading
+    </button>
+</form>
+
+@functions {
+    public string HeadingText { get; set; } = "Welcome to Blazor!";
+    public string NewHeadingText { get; set; }
+    public string HeadingFontStyle { get; set; } = "normal";
+    public bool ItalicsCheck { get; set; } = false;
+
+    // When UpdateHeading is executed:
+    //    HeadingText is assigned the value of NewHeadingText.
+    //    ItalicsCheck determines the value of HeadingFontStyle to 
+    //        set the font style of the heading.
+    //    WebUtility.HtmlEncode ensures that user input can't 
+    //        compromise the security of the page with a malicious 
+    //        entry.
+    public void UpdateHeading()
+    {
+        HeadingText = WebUtility.HtmlEncode(NewHeadingText);
+
+        HeadingFontStyle = ItalicsCheck ? "italic" : "normal";
+    }
+}
